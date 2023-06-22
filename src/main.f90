@@ -116,13 +116,13 @@ program hydrogen_bond_analysis
 ! Calculate H-Bonds
         frames: Do fr_idx=1, chunk_stop
             ! Grab Coordinates Donor
-            rdonO = trj%x(fr_idx, :,  trim(donor_selection(1)))
-            rdonH = trj%x(fr_idx, :,  trim(donor_selection(2)))
+            rdonO = trj%x(fr_idx,  group=trim(donor_selection(1)))
+            rdonH = trj%x(fr_idx,  group=trim(donor_selection(2)))
 
             ! Loop over Acceptor Types
             Do acc=1, size(selections,1)
                 ! Grab Coordinates Acceptor
-                racc = trj%x(fr_idx, :,  trim(selections(acc)))
+                racc = trj%x(fr_idx,  group=trim(selections(acc)))
 
                 ! Calculate H-Bonds
                 call find_H_bonds(rdonO, rdonH, racc, criteria(acc,:) & ! *****

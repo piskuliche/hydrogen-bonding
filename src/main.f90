@@ -1,34 +1,4 @@
-subroutine Read_Input(inputfile, criteria, donor_selection, selections, traj_name, idx_name)
-    
-    implicit none
-    ! Input ********************************************************************
-    character(len=100), intent(in) :: inputfile
-    ! Output *******************************************************************
-    real, allocatable, intent(out) :: criteria(:,:)
-    character(len=100), dimension(2), intent(out) :: donor_selection
-    character(len=100), allocatable, intent(out) :: selections(:)
-    character(len=100), intent(out) :: traj_name, idx_name
-    ! Local ********************************************************************
-    integer :: i, num_acc_selections
-    ! **************************************************************************
 
-    open(10, file=trim(inputfile), status='old')
-    read(10,*) 
-    read(10,*) traj_name, idx_name
-    read(10,*)
-    read(10,*) donor_selection(1), donor_selection(2)
-    read(10,*) 
-    read(10,*) num_acc_selections
-    read(10,*)
-    allocate(criteria(num_acc_selections,3))
-    allocate(selections(num_acc_selections))
-    criteria = 0.0
-    selections = "None"
-    do i=1, num_acc_selections
-        read(10,*) selections(i), criteria(i,1), criteria(i,2), criteria(i,3)
-    end do
-
-end subroutine Read_Input
 
 program hydrogen_bond_analysis
 
@@ -46,6 +16,8 @@ program hydrogen_bond_analysis
     character(len=100), dimension(2) :: donor_selection
     character(len=100), allocatable :: selections(:)
     real, allocatable :: criteria(:,:)
+    real, dimension(3,3) :: boxtrj
+    real, dimension(chunk_size, 3) :: box
 
 
     integer :: number_of_frames, number_of_atoms
@@ -117,6 +89,10 @@ program hydrogen_bond_analysis
 ! Calculate H-Bonds
         frames: Do fr_idx=1, chunk_stop
             ! Grab Coordinates Donor
+            boxtrj = trj%box(fr_idx)
+            box(fr_idx,1) = boxtrj(1,1)
+            box(fr_idx,2) = boxtrj(2,2)
+            box(fr_idx,3) = boxtrj(3,3)
             rdonO = trj%x(fr_idx,  group=trim(donor_selection(1)))
             rdonH = trj%x(fr_idx,  group=trim(donor_selection(2)))
 
@@ -126,7 +102,7 @@ program hydrogen_bond_analysis
                 racc = trj%x(fr_idx,  group=trim(selections(acc)))
 
                 ! Calculate H-Bonds
-                call find_H_bonds(rdonO, rdonH, racc, criteria(acc,:) & ! *****
+                call find_H_bonds(rdonO, rdonH, racc, box(fr_idx), criteria(acc,:) & ! *****
                     , hbond_values(fr_idx, acc, :,:), hbond_donH_idx(fr_idx, acc, :) &                  ! ***** HBOND CALCULATION
                     , hbond_accX_idx(fr_idx, acc, :), hbond_count(fr_idx, acc))                        ! *****
             EndDo

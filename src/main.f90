@@ -9,6 +9,7 @@ subroutine Read_Input(inputfile, criteria, donor_selection, selections, traj_nam
     character(len=100), allocatable, intent(out) :: selections(:)
     character(len=100), intent(out) :: traj_name, idx_name
     ! Local ********************************************************************
+    integer :: i, num_acc_selections
     ! **************************************************************************
 
     open(10, file=trim(inputfile), status='old')
@@ -47,7 +48,7 @@ program hydrogen_bond_analysis
     type(Trajectory) :: trj
     integer :: number_of_frames, number_of_atoms
     ! Local ********************************************************************
-    integer :: chunk, fr_idx
+    integer :: chunk, fr_idx, i, hbond, acc
     integer :: number_of_chunks, chunk_stop
 
     integer :: num_donor_O, num_donor_H
@@ -65,7 +66,7 @@ program hydrogen_bond_analysis
 
 
     ! Read Input File
-    Read_Input("hbonding.in", criteria, donor_selection, selections, traj_name, idx_name)
+    call Read_Input("hbonding.in", criteria, donor_selection, selections, traj_name, idx_name)
 
     ! Open Trajectory
     call trj%open(trim(traj_name), trim(idx_name))
@@ -81,7 +82,7 @@ program hydrogen_bond_analysis
     pred_max_hbonds = num_donor_H*2
 ! ****************************************************************************************************
 ! ALLOCATE ARRAYS
-    allocate(racc(max(num_acc_atoms),3))
+    allocate(racc(maxval(num_acc_atoms),3))
     allocate(rdonO(num_donor_O,3))
     allocate(rdonH(num_donor_H,3))
 
@@ -96,7 +97,7 @@ program hydrogen_bond_analysis
 ! ****************************************************************************************************
 
     ! Set Calculation Values
-    number_of_chunks = ceiling(number_of_frames/chunk_size)
+    number_of_chunks = ceiling(real(number_of_frames/chunk_size))
     chunks: do chunk=1, number_of_chunks
         ! Zero arrays
         racc = 0.0; rdonO = 0.0; rdonH = 0.0
@@ -112,16 +113,16 @@ program hydrogen_bond_analysis
 ! Calculate H-Bonds
         frames: Do fr_idx=1, chunk_stop
             ! Grab Coordinates Donor
-            rdonO = trj%x(fr_idx, :, donor_selection(1))
-            rdonH = trj%x(fr_idx, :, donor_selection(2))
+            rdonO = trj%x(fr_idx,  donor_selection(1))
+            rdonH = trj%x(fr_idx,  donor_selection(2))
 
             ! Loop over Acceptor Types
             Do acc=1, size(selections,1)
                 ! Grab Coordinates Acceptor
-                racc = trj%x(fr_idx, :, selections(acc))
+                racc = trj%x(fr_idx,  selections(acc))
 
                 ! Calculate H-Bonds
-                call hydrogen_bonds(rdonO, rdonH, racc, criteria(acc,:), num_acc_atoms(acc), num_donor_atoms & ! *****
+                call find_H_bonds(rdonO, rdonH, racc, criteria(acc,:), num_acc_atoms(acc), num_donor_atoms & ! *****
                     , hbond_values(fr_idx, acc, :,:), hbond_donH_idx(fr_idx, acc, :) &                  ! ***** HBOND CALCULATION
                     , hbond_accX_idx(fr_idx, acc, :), hbond_count(fr_idx, acc))                        ! *****
             EndDo

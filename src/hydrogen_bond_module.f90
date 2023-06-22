@@ -31,7 +31,7 @@ contains
 
     end subroutine hbond_criteria
 
-    subroutine find_H_Bonds(r_don_O, r_don_H, r_acc_X, box, criteria, hbond_values, hbond_donH_idx, hbond_accX_idx, hbond_count)
+    subroutine find_H_bonds(r_don_O, r_don_H, r_acc_X, box, criteria, hbond_values, hbond_donH_idx, hbond_accX_idx, hbond_count)
     ! This is a subroutine to calculate hydrogen bonds from a set of coordinates.
     ! The subroutine takes as input the coordinates of the donor and acceptor atoms,
     ! the box size, the criteria for the hydrogen bond, and the output arrays.
@@ -112,6 +112,6 @@ contains
         loop_index = loop_index + 1
     enddo
 
-    end subroutine find_H_Bonds
+    end subroutine find_H_bonds
 
 end module hydrogen_bonds

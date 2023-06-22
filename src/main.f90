@@ -120,9 +120,10 @@ program hydrogen_bond_analysis
         do fr_idx=1, chunk_stop
             write(10,*) fr_idx, 0
             write(*,*) fr_idx, 0, "ck"
+            write(*,*) size(selections,1)
             do acc=1, size(selections,1)
                 write(10,*) hbond_count(fr_idx, acc)
-                write(10,*) hbond_count(fr_idx, acc)
+                write(*,*) hbond_count(fr_idx, acc)
                 do hbond=1, hbond_count(fr_idx, acc)
                     write(10,*) hbond_donH_idx(fr_idx, acc, hbond), hbond_accX_idx(fr_idx, acc, hbond)
                 enddo

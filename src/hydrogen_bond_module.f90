@@ -3,6 +3,7 @@ module hydrogen_bonds
     use distance_module
 
 contains
+
     subroutine Read_Input(inputfile, criteria, donor_selection, selections, traj_name, idx_name)
     
         implicit none
@@ -61,6 +62,7 @@ contains
     ! Calculate the HX distance
     rHO = periodic_distance2(rd_H, ra_X, box)
     write(*,*) "rho", rHO, criteria(2)
+    write(*,*) rd_H(:), ra_X(:), box(:)
     if ( rHO < criteria(2) ) then
         theta = angle_between_points(rd_H, rd_O, ra_X, box)
         write(*,*) "t", theta, criteria(3)

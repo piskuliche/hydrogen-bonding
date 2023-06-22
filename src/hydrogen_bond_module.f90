@@ -118,6 +118,8 @@ contains
     allocate(dr_OO_don_idx(pred_max_hbonds*2))
     allocate(dr_OO_acc_idx(pred_max_hbonds*2))
 
+    dr_OO_values = 0.0; dr_OO_don_idx = 0; dr_OO_acc_idx = 0
+
     ! Initialize Arrays
     hbond_values = 0.0; hbond_donH_idx = 0; hbond_accX_idx = 0
 
@@ -149,6 +151,10 @@ contains
         enddo
         loop_index = loop_index + 1
     enddo
+
+    deallocate(dr_OO_values)
+    deallocate(dr_OO_don_idx)
+    deallocate(dr_OO_acc_idx)
 
     end subroutine find_H_bonds
 

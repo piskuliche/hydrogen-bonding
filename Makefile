@@ -1,6 +1,6 @@
 # Compiler and linker settings
 FC = gfortran
-FFLAGS = -O3 -std=f2008
+FFLAGS = -O3 -std=f2008 -fbounds-check
 
 lib_dist_path = /home/piskuliche/Software/fortran-distance-module/lib
 inc_dist_path = /home/piskuliche/Software/fortran-distance-module/bin

@@ -3,6 +3,37 @@ module hydrogen_bonds
     use distance_module
 
 contains
+    subroutine Read_Input(inputfile, criteria, donor_selection, selections, traj_name, idx_name)
+    
+        implicit none
+        ! Input ********************************************************************
+        character(len=100), intent(in) :: inputfile
+        ! Output *******************************************************************
+        real, allocatable, intent(out) :: criteria(:,:)
+        character(len=100), dimension(2), intent(out) :: donor_selection
+        character(len=100), allocatable, intent(out) :: selections(:)
+        character(len=100), intent(out) :: traj_name, idx_name
+        ! Local ********************************************************************
+        integer :: i, num_acc_selections
+        ! **************************************************************************
+
+        open(10, file=trim(inputfile), status='old')
+        read(10,*) 
+        read(10,*) traj_name, idx_name
+        read(10,*)
+        read(10,*) donor_selection(1), donor_selection(2)
+        read(10,*) 
+        read(10,*) num_acc_selections
+        read(10,*)
+        allocate(criteria(num_acc_selections,3))
+        allocate(selections(num_acc_selections))
+        criteria = 0.0
+        selections = "None"
+        do i=1, num_acc_selections
+            read(10,*) selections(i), criteria(i,1), criteria(i,2), criteria(i,3)
+        end do
+
+    end subroutine Read_Input
 
     subroutine hbond_criteria(rd_O, rd_H, ra_X, box, criteria, hbonded, rHO, theta)
 

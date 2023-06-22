@@ -36,6 +36,8 @@ program hydrogen_bond_analysis
     use hydrogen_bonds
 
     implicit none
+
+    type (Trajectory) :: trj
     ! Parameters ***************************************************************
     integer, parameter :: chunk_size = 100
 
@@ -45,7 +47,7 @@ program hydrogen_bond_analysis
     character(len=100), allocatable :: selections(:)
     real, allocatable :: criteria(:,:)
 
-    type (Trajectory) :: trj
+
     integer :: number_of_frames, number_of_atoms
     ! Local ********************************************************************
     integer :: chunk, fr_idx, i, hbond, acc
@@ -114,13 +116,13 @@ program hydrogen_bond_analysis
 ! Calculate H-Bonds
         frames: Do fr_idx=1, chunk_stop
             ! Grab Coordinates Donor
-            rdonO = trj%x(fr_idx,  donor_selection(1))
-            rdonH = trj%x(fr_idx,  donor_selection(2))
+            rdonO = trj%x(fr_idx, :,  trim(donor_selection(1)))
+            rdonH = trj%x(fr_idx, :,  trim(donor_selection(2)))
 
             ! Loop over Acceptor Types
             Do acc=1, size(selections,1)
                 ! Grab Coordinates Acceptor
-                racc = trj%x(fr_idx,  selections(acc))
+                racc = trj%x(fr_idx, :,  trim(selections(acc)))
 
                 ! Calculate H-Bonds
                 call find_H_bonds(rdonO, rdonH, racc, criteria(acc,:) & ! *****

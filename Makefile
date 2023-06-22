@@ -7,7 +7,7 @@ inc_dist_path = /home/piskuliche/Software/fortran-distance-module/bin
 lib_gmxfort_path = /home/piskuliche/Software/libgmxfort/bin/lib
 inc_gmxfort_path = /home/piskuliche/Software/libgmxfort/bin/include
 
-LDFLAGS = -I $(inc_gmxfort_path):$(inc_dist_path) -L $(lib_dist_path):$(lib_gmxfort_path) -ldistance -lgmxfort
+LDFLAGS = -I $(inc_gmxfort_path):$(inc_dist_path) -L $(lib_dist_path) -L $(lib_gmxfort_path) -ldistance -lgmxfort
 
 # Directories and files
 SRC_DIR = src

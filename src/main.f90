@@ -96,10 +96,10 @@ program hydrogen_bond_analysis
             box(fr_idx,2) = boxtrj(2,2)
             box(fr_idx,3) = boxtrj(3,3)
             do i=1, num_donor_O
-                rdonO(fr_idx,:) = trj%x(fr_idx, i, group=trim(donor_selection(1)))
+                rdonO(i,:) = trj%x(fr_idx, i, group=trim(donor_selection(1)))
             enddo 
             do i=1, num_donor_H
-                rdonH(fr_idx,:) = trj%x(fr_idx, i, group=trim(donor_selection(2)))
+                rdonH(i,:) = trj%x(fr_idx, i, group=trim(donor_selection(2)))
             enddo
 
             ! Loop over Acceptor Types

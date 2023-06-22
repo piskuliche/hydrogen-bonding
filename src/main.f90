@@ -52,6 +52,7 @@ program hydrogen_bond_analysis
     ! Local ********************************************************************
     integer :: chunk, fr_idx, i, hbond, acc
     integer :: number_of_chunks, chunk_stop
+    integer :: ntmp
 
     integer :: num_donor_O, num_donor_H
     integer, allocatable :: num_acc_atoms(:)
@@ -110,7 +111,7 @@ program hydrogen_bond_analysis
         ! Grab the frames and bring them into memory
         chunk_stop = min(chunk_size, number_of_frames-(chunk-1)*chunk_size)
         ! Read in chunk of coordinates
-        trj%read_next(chunk_stop)
+        ntmp = trj%read_next(chunk_stop)
 
 ! ****************************************************************************************************
 ! Calculate H-Bonds

@@ -122,7 +122,7 @@ program hydrogen_bond_analysis
                 racc = trj%x(fr_idx,  selections(acc))
 
                 ! Calculate H-Bonds
-                call find_H_bonds(rdonO, rdonH, racc, criteria(acc,:), num_acc_atoms(acc), num_donor_atoms & ! *****
+                call find_H_bonds(rdonO, rdonH, racc, criteria(acc,:) & ! *****
                     , hbond_values(fr_idx, acc, :,:), hbond_donH_idx(fr_idx, acc, :) &                  ! ***** HBOND CALCULATION
                     , hbond_accX_idx(fr_idx, acc, :), hbond_count(fr_idx, acc))                        ! *****
             EndDo

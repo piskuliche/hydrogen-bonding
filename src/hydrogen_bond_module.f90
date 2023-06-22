@@ -147,6 +147,7 @@ contains
         do i=1,2
             ! Where rH is in the r_don_H array
             hindex = (oindex-1)*2 + i
+            write(*,*) "bf", r_don_H(hindex,:), hindex
             call hbond_criteria(r_don_O(oindex,:), r_don_H(hindex,:), r_acc_X(aindex,:), box, criteria, hbonded, rHO, theta)
             if ( hbonded == 1 ) then
                 hbond_count = hbond_count + 1

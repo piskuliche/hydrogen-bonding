@@ -50,6 +50,8 @@ program hydrogen_bond_analysis
     ! Find number of atoms of each type
     num_donor_O = trj%natoms(trim(donor_selection(1)))
     num_donor_H = trj%natoms(trim(donor_selection(2)))
+    write(*,*) "Number of Donor Oxygens: ", num_donor_O
+    write(*,*) "Number of Donor Hydrogens: ", num_donor_H
     allocate(num_acc_atoms(size(selections,1)))
     do i=1, size(selections,1)
         num_acc_atoms(i) = trj%natoms(trim(selections(i)))

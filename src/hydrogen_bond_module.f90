@@ -131,6 +131,7 @@ contains
     do while (loop_index < size(dr_OO_values,1) .and. dr_OO_values(loop_index) /= 0)
         ! Check the hydrogen bond criteria, noting that OO already satisfies it.
         oindex = dr_OO_don_idx(loop_index)
+        write(*,*) "oindex", oindex
         aindex = dr_OO_acc_idx(loop_index)
         do i=1,2
             ! Where rH is in the r_don_H array

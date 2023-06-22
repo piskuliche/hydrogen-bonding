@@ -126,7 +126,7 @@ contains
 
     ! Calculate the distance between the donor and acceptor atoms
     cell_length = sqrt(criteria(1))/2.0
-    call cell_list_distance(r_don_O, r_acc_X, box, cell_length, criteria(1), dr_OO_values, dr_OO_don_idx, dr_OO_acc_idx)
+    call cell_list_distance(r_don_O, r_acc_X, box, cell_length, criteria(1), dr_OO_values, dr_OO_don_idx, dr_OO_acc_idx, same_array=0)
 
     ! Check the remainder of the hydrogen bonds
     loop_index = 1

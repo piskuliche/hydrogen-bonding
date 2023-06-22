@@ -104,6 +104,7 @@ program hydrogen_bond_analysis
         hbond_values = 0.0; hbond_donH_idx = 0; hbond_accX_idx = 0; hbond_count = 0
 
         write(*,*) "Chunk is %d", chunk
+        chunk_stop = chunk_size
         ! Grab the frames and bring them into memory
         chunk_stop = min(chunk_size, number_of_frames-(chunk-1)*chunk_size)
         ! Read in chunk of coordinates

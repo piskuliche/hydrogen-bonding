@@ -15,7 +15,9 @@ contains
         character(len=100), intent(out) :: traj_name, idx_name
         ! Local ********************************************************************
         integer :: i, num_acc_selections
+        real :: pi
         ! **************************************************************************
+        pi = 4.D0*DATAN(1.D0)
 
         open(10, file=trim(inputfile), status='old')
         read(10,*) 
@@ -31,6 +33,9 @@ contains
         selections = "None"
         do i=1, num_acc_selections
             read(10,*) selections(i), criteria(i,1), criteria(i,2), criteria(i,3)
+            criteria(i,1) = criteria(i,1)**2
+            criteria(i,2) = criteria(i,2)**2
+            criteria(i,3) = criteria(i,3)*pi/180.0
         end do
 
     end subroutine Read_Input

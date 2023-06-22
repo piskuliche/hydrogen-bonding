@@ -93,16 +93,22 @@ program hydrogen_bond_analysis
             box(fr_idx,1) = boxtrj(1,1)
             box(fr_idx,2) = boxtrj(2,2)
             box(fr_idx,3) = boxtrj(3,3)
-            rdonO = trj%x(fr_idx,  group=trim(donor_selection(1)))
-            rdonH = trj%x(fr_idx,  group=trim(donor_selection(2)))
+            do i=1, num_donor_O
+                rdonO(fr_idx,:) = trj%x(fr_idx, i, group=trim(donor_selection(1)))
+            enddo 
+            do i=1, num_donor_H
+                rdonH(fr_idx,:) = trj%x(fr_idx, i, group=trim(donor_selection(2)))
+            enddo
 
             ! Loop over Acceptor Types
             Do acc=1, size(selections,1)
                 ! Grab Coordinates Acceptor
-                racc = trj%x(fr_idx,  group=trim(selections(acc)))
+                do i=1, num_acc_atoms(acc)
+                    racc(i,:) = trj%x(fr_idx, i, group=trim(selections(acc)))
+                enddo
 
                 ! Calculate H-Bonds
-                call find_H_bonds(rdonO, rdonH, racc, box(fr_idx), criteria(acc,:) & ! *****
+                call find_H_bonds(rdonO, rdonH, racc, box(fr_idx,:), criteria(acc,:) & ! *****
                     , hbond_values(fr_idx, acc, :,:), hbond_donH_idx(fr_idx, acc, :) &                  ! ***** HBOND CALCULATION
                     , hbond_accX_idx(fr_idx, acc, :), hbond_count(fr_idx, acc))                        ! *****
             EndDo

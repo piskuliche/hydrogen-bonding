@@ -24,21 +24,21 @@ OBJ_FILES = $(patsubst $(SRC_DIR)/%.f90,$(OBJ_DIR)/%.o,$(SRC_FILES)) $(MODULE_OB
 all: $(TARGET)
 
 $(TARGET): $(OBJ_FILES) | $(BIN_DIR)
-    $(FC) $(LDFLAGS) -o $@ $^
+	$(FC) $(LDFLAGS) -o $@ $^
 
 $(MODULE_OBJ_FILE): $(MODULE_SRC_FILE) | $(OBJ_DIR)
-    $(FC) $(LDFLAGS) $(FFLAGS) -c -o $@ $<
+	$(FC) $(LDFLAGS) $(FFLAGS) -c -o $@ $<
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.f90 | $(OBJ_DIR)
-    $(FC) $(LDFLAGS) $(FFLAGS) -c -o $@ $<
+	$(FC) $(LDFLAGS) $(FFLAGS) -c -o $@ $<
 
 $(OBJ_DIR):
-    mkdir -p $(OBJ_DIR)
+	mkdir -p $(OBJ_DIR)
 
 $(BIN_DIR):
-    mkdir -p $(BIN_DIR)
+	mkdir -p $(BIN_DIR)
 
 clean:
-    rm -rf $(OBJ_DIR) $(BIN_DIR)
+	rm -rf $(OBJ_DIR) $(BIN_DIR)
 
 .PHONY: all clean

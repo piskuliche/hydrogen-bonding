@@ -91,7 +91,7 @@ contains
     ! Check the remainder of the hydrogen bonds
     loop_index = 1
     hbond_count = 0
-    do while (loop_index < size(dr_values,1) .and. dr_OO_values(loop_index) /= 0)
+    do while (loop_index < size(dr_OO_values,1) .and. dr_OO_values(loop_index) /= 0)
         ! Check the hydrogen bond criteria, noting that OO already satisfies it.
         oindex = dr_OO_don_idx(loop_index)
         aindex = dr_OO_acc_idx(loop_index)

@@ -45,7 +45,7 @@ program hydrogen_bond_analysis
     character(len=100), allocatable :: selections(:)
     real, allocatable :: criteria(:,:)
 
-    type(Trajectory) :: trj
+    type (Trajectory) :: trj
     integer :: number_of_frames, number_of_atoms
     ! Local ********************************************************************
     integer :: chunk, fr_idx, i, hbond, acc

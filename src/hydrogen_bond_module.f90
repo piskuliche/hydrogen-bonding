@@ -36,6 +36,7 @@ contains
             criteria(i,1) = criteria(i,1)**2
             criteria(i,2) = criteria(i,2)**2
             criteria(i,3) = criteria(i,3)*pi/180.0
+            write(*,*) selections(i), criteria(i,1), criteria(i,2), criteria(i,3)
         end do
 
     end subroutine Read_Input

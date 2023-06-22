@@ -24,7 +24,7 @@ contains
     rHO = periodic_distance2(rd_H, ra_X, box)
     if ( rHO < criteria(2) ) then
         theta = angle_between_points(rd_H, rd_O, ra_X, box)
-        if theta < criteria(3) then
+        if ( theta < criteria(3) )then
             hbonded = 1
         endif
     endif
@@ -91,10 +91,10 @@ contains
     ! Check the remainder of the hydrogen bonds
     loop_index = 1
     hbond_count = 0
-    do while (loop_index < size(dr_values,1) .and. dr_values(loop_index) /= 0)
+    do while (loop_index < size(dr_values,1) .and. dr_OO_values(loop_index) /= 0)
         ! Check the hydrogen bond criteria, noting that OO already satisfies it.
-        oindex = dr_don_idx(loop_index)
-        aindex = dr_acc_idx(loop_index)
+        oindex = dr_OO_don_idx(loop_index)
+        aindex = dr_OO_acc_idx(loop_index)
         do i=1,2
             ! Where rH is in the r_don_H array
             hindex = (oindex-1)*2 + i

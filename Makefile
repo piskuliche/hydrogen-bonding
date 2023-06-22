@@ -2,11 +2,12 @@
 FC = gfortran
 FFLAGS = -O3 -std=f2008
 
-lib_dist_path = /path/to/libdistance
-lib_gmxfort_path = /path/to/libgmxfort
-inc_gmxfort_path = /path/to/incgmxfort
+lib_dist_path = /home/piskuliche/Software/fortran-distance-module/lib
+inc_dist_path = /home/piskuliche/Software/fortran-distance-module/bin
+lib_gmxfort_path = /home/piskuliche/Software/libgmxfort/bin/lib
+inc_gmxfort_path = /home/piskuliche/Software/libgmxfort/bin/include
 
-LDFLAGS = -I $(inc_gmxfort_path) -L$(lib_dist_path):$(lib_gmxfort_path) -ldistance -lgmxfort
+LDFLAGS = -I $(inc_gmxfort_path) -I$(inc_dist_path) -L$(lib_dist_path):$(lib_gmxfort_path) -ldistance -lgmxfort
 
 # Directories and files
 SRC_DIR = src
@@ -18,7 +19,7 @@ TARGET = $(BIN_DIR)/hydrogen_bonding
 MODULE_SRC_FILE = $(SRC_DIR)/hydrogen_bond_module.f90
 MODULE_OBJ_FILE = $(OBJ_DIR)/hydrogen_bond_module.o
 SRC_FILES = $(filter-out $(MODULE_SRC_FILE), $(wildcard $(SRC_DIR)/*.f90))
-OBJ_FILES = $(patsubst $(SRC_DIR)/%.f90,$(OBJ_DIR)/%.o,$(SRC_FILES)) $(MODULE_OBJ_FILE)
+OBJ_FILES = $(MODULE_OBJ_FILE) $(patsubst $(SRC_DIR)/%.f90,$(OBJ_DIR)/%.o,$(SRC_FILES)) 
 
 # Targets
 all: $(TARGET)

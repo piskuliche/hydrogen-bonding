@@ -7,7 +7,7 @@ contains
     
         implicit none
         ! Input ********************************************************************
-        character(len=100), intent(in) :: inputfile
+        character(len=*), intent(in) :: inputfile
         ! Output *******************************************************************
         real, allocatable, intent(out) :: criteria(:,:)
         character(len=100), dimension(2), intent(out) :: donor_selection

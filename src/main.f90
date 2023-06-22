@@ -74,7 +74,7 @@ program hydrogen_bond_analysis
 ! ****************************************************************************************************
 
     ! Set Calculation Values
-    number_of_chunks = ceiling(real(number_of_frames/chunk_size))
+    number_of_chunks = ceiling(real(number_of_frames)/real(chunk_size))
     chunks: do chunk=1, number_of_chunks
         ! Zero arrays
         racc = 0.0; rdonO = 0.0; rdonH = 0.0

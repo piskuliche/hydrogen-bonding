@@ -15,25 +15,30 @@ BIN_DIR = bin
 TARGET = $(BIN_DIR)/hydrogen_bonding
 
 # Source files and object files
-SRC_FILES = $(wildcard $(SRC_DIR)/*.f90)
-OBJ_FILES = $(patsubst $(SRC_DIR)/%.f90,$(OBJ_DIR)/%.o,$(SRC_FILES))
+MODULE_SRC_FILE = $(SRC_DIR)/hydrogen_bond_module.f90
+MODULE_OBJ_FILE = $(OBJ_DIR)/hydrogen_bond_module.o
+SRC_FILES = $(filter-out $(MODULE_SRC_FILE), $(wildcard $(SRC_DIR)/*.f90))
+OBJ_FILES = $(patsubst $(SRC_DIR)/%.f90,$(OBJ_DIR)/%.o,$(SRC_FILES)) $(MODULE_OBJ_FILE)
 
 # Targets
 all: $(TARGET)
 
 $(TARGET): $(OBJ_FILES) | $(BIN_DIR)
-	$(FC) $(LDFLAGS) -o $@ $^
+    $(FC) $(LDFLAGS) -o $@ $^
+
+$(MODULE_OBJ_FILE): $(MODULE_SRC_FILE) | $(OBJ_DIR)
+    $(FC) $(LDFLAGS) $(FFLAGS) -c -o $@ $<
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.f90 | $(OBJ_DIR)
-	$(FC) $(FFLAGS) -c -o $@ $<
+    $(FC) $(LDFLAGS) $(FFLAGS) -c -o $@ $<
 
 $(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
+    mkdir -p $(OBJ_DIR)
 
 $(BIN_DIR):
-	mkdir -p $(BIN_DIR)
+    mkdir -p $(BIN_DIR)
 
 clean:
-	rm -rf $(OBJ_DIR) $(BIN_DIR)
+    rm -rf $(OBJ_DIR) $(BIN_DIR)
 
 .PHONY: all clean

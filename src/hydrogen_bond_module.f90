@@ -61,8 +61,13 @@ contains
 
     ! Calculate the HX distance
     rHO = periodic_distance2(rd_H, ra_X, box)
+    write(*,*) rHO
+    write(*,*) rd_O(:)
+    write(*,*) rd_H(:)
+    write(*,*) ra_X(:)
     if ( rHO < criteria(2) ) then
         theta = angle_between_points(rd_H, rd_O, ra_X, box)
+        write(*,*) theta
         if ( theta < criteria(3) )then
             hbonded = 1
         endif
@@ -140,6 +145,7 @@ contains
         do i=1,2
             ! Where rH is in the r_don_H array
             hindex = (oindex-1)*2 + i
+
             call hbond_criteria(r_don_O(oindex,:), r_don_H(hindex,:), r_acc_X(aindex,:), box, criteria, hbonded, rHO, theta)
             if ( hbonded == 1 ) then
                 hbond_count = hbond_count + 1

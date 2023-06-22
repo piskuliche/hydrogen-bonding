@@ -63,7 +63,6 @@ contains
     rHO = periodic_distance2(rd_H, ra_X, box)
     if ( rHO < criteria(2) ) then
         theta = angle_between_points(rd_H, rd_O, ra_X, box)
-        write(*,*) "t", theta, criteria(3)
         if ( theta < criteria(3) )then
             hbonded = 1
         endif

@@ -79,7 +79,7 @@ program hydrogen_bond_analysis
         racc = 0.0; rdonO = 0.0; rdonH = 0.0
         hbond_values = 0.0; hbond_donH_idx = 0; hbond_accX_idx = 0; hbond_count = 0
 
-        write(*,*) "Chunk is %d", chunk
+        write(*,*) "Chunk is ", chunk
         chunk_stop = chunk_size
         ! Grab the frames and bring them into memory
         chunk_stop = min(chunk_size, number_of_frames-(chunk-1)*chunk_size)
@@ -119,7 +119,9 @@ program hydrogen_bond_analysis
         write(*,*) "Writing H-Bonds"
         do fr_idx=1, chunk_stop
             write(10,*) fr_idx, 0
+            write(*,*) fr_idx, 0, "ck"
             do acc=1, size(selections,1)
+                write(10,*) hbond_count(fr_idx, acc)
                 write(10,*) hbond_count(fr_idx, acc)
                 do hbond=1, hbond_count(fr_idx, acc)
                     write(10,*) hbond_donH_idx(fr_idx, acc, hbond), hbond_accX_idx(fr_idx, acc, hbond)

@@ -61,10 +61,7 @@ contains
 
     ! Calculate the HX distance
     rHO = periodic_distance2(rd_H, ra_X, box)
-    write(*,*) "rho ", rHO, " < ", criteria(2)
-    write(*,*) rd_O(:)
-    write(*,*) rd_H(:)
-    write(*,*) ra_X(:)
+
     if ( rHO < criteria(2) ) then
         theta = angle_between_points(rd_H, rd_O, ra_X, box)
         write(*,*) "tht ", theta, " < ", criteria(3)
